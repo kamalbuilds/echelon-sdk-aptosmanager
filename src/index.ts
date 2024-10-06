@@ -323,4 +323,39 @@ export class EchelonClient {
       address: this.address,
     });
   }
+
+  /**
+   * Retrieves the token name for a specified market.
+   *
+   * @param {string} market - The market identifier.
+   * @returns {Promise<string>} A promise that resolves to the token name.
+   */
+  async getMarketTokenName(market: string): Promise<string> {
+    const result = await this.aptos.view({
+      payload: createViewPayload(LENDING_ASSETS_ABI, {
+        function: "market_coin",
+        functionArguments: [market as `0x${string}`],
+        typeArguments: [],
+        address: this.address,
+      }),
+    });
+    return result[0] as string;
+  }
+
+  /**
+   * Creates a mapping of token names to their corresponding market addresses.
+   *
+   * @returns {Promise<Record<string, string>>} A promise that resolves to an object mapping token names to market addresses.
+   */
+  async createMarketMapping(): Promise<Record<string, string>> {
+    const markets = await this.getAllMarkets();
+    const mapping: Record<string, string> = {};
+
+    for (const market of markets) {
+      const tokenName = await this.getMarketTokenName(market);
+      mapping[tokenName] = market;
+    }
+
+    return mapping;
+  }
 }

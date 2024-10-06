@@ -1,4 +1,4 @@
-# echelon-sdk
+# Echelon-sdk
 
 ## Quick Start
 
@@ -55,9 +55,9 @@ const market = markets[0]; // use the first market as an example
 const coin = await client.getMarketCoin(market);
 ```
 
-### Borrow/Supply/Replay/Withdraw
+### Borrow/Supply/Repay/Withdraw
 
-Borrow, supply, replay, and withdraw are similar. Let's use Borrow as an example.
+Borrow, supply, repay, and withdraw are similar. Let's use Borrow as an example.
 
 First, you need to get the amount of coins the user can borrow:
 
